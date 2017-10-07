@@ -1,11 +1,44 @@
+application: zaif-bot
+version: 1
 runtime: python27
 api_version: 1
 threadsafe: true
 
 handlers:
 - url: /.*
-  script: main.app
+  script: zaif.main.app
 
 libraries:
 - name: ssl
   version: latest
+
+skip_files: |
+  ^(.*/)?(
+  (_backup/.*)|
+  (app\.yaml)|
+  (app\.yml)|
+  (index\.yaml)|
+  (index\.yml)|
+  (#.*#)|
+  (.*~)|
+  (.*\.py[co])|
+  (.*\.po)|
+  (.*\.pot)|
+  (\..*)|
+  (app\.yaml\.sample)|
+  (index\.yaml\.sample)|
+  (cron\.yaml\.sample)|
+  (manage\.py)|
+  (TODO)|
+  (TODO\.pdf)|
+  (README)|
+  (README\.pdf)|
+  (LICENSE)|
+  (gaema-LICENSE)|
+  (kay\/docs\/.*)|
+  (node_modules\/.*)|
+  (bower_components\/.*)|
+  (.*\.scss)|
+  (.*\.less)|
+  (.*\.md)|
+  )$

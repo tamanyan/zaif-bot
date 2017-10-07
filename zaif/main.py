@@ -14,19 +14,32 @@
 
 # [START app]
 import logging
+from settings import KEY, SECRET
 
+# from google.cloud import datastore
+from google.appengine.ext import ndb
 from flask import Flask
 from flask import jsonify
-from zaifapi import ZaifPublicApi
+from zaifapi import ZaifPublicApi, ZaifPrivateApi
 
 
 app = Flask(__name__)
 
 
-@app.route('/')
-def hello():
+@app.route('/save_btc')
+def save_btc():
     zaif = ZaifPublicApi()
     return jsonify({'BTC/JPY': zaif.last_price('btc_jpy')})
+
+
+@app.route('/trade_btc')
+def trade_btc():
+    logging.info("{} {}".format(KEY, SECRET))
+    zaif = ZaifPrivateApi(KEY, SECRET)
+    return jsonify({
+        'info': zaif.get_info(),
+        'orders': zaif.active_orders()
+    })
 
 
 @app.errorhandler(500)

@@ -1,0 +1,7 @@
+cron:
+- description: save BTC/JPY
+  url: /save_btc
+  schedule: every 1 mins
+- description: bid or ask BTC
+  url: /trade_btc
+  schedule: every 5 mins
