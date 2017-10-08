@@ -43,8 +43,8 @@ class BidBTCHandler(webapp2.RequestHandler):
             amount = round_down4(funds_jpy/now_price)
 
             trade_btc(action='bid',
-                    amount=amount,
-                    price=int(now_price))
+                      amount=amount,
+                      price=int(now_price))
 
             bid_order = BTCBidOrder(price=int(now_price), amount=amount)
             bid_order.put()
@@ -56,17 +56,21 @@ class AskBTCHandler(webapp2.RequestHandler):
     def post(self):
         ASK_PRICE_RATIO = 1.005 # 0.5% up
 
-        now_price = int(get_btc_last_price())
-        funds_jpy, funds_btc = get_jpy_and_btc_funds()
         latest_price, latest_amount = get_latest_bid_order_price_and_amount()
 
-        logging.info("The Balance JPY {}  BTC {}".format(funds_jpy, funds_btc))
-
         # ask BTC
-        if latest_price is None or funds_btc > 0:
+        if latest_price is None:
             logging.info("There is not order")
             return
 
+        funds_jpy, funds_btc = get_jpy_and_btc_funds()
+        logging.info("The Balance JPY {}  BTC {}".format(funds_jpy, funds_btc))
+
+        if funds_btc == 0:
+            logging.info("funds_btc is empty")
+            return
+
+        now_price = int(get_btc_last_price())
         ask_price = int(latest_price * ASK_PRICE_RATIO)
         if now_price > ask_price:
             ask_price = now_price
@@ -76,8 +80,8 @@ class AskBTCHandler(webapp2.RequestHandler):
         logging.info("The latest bid order price: {}, amount: {}".format(latest_price, latest_amount))
 
         trade_btc(action='ask',
-                amount=amount,
-                price=int(ask_price))
+                  amount=amount,
+                  price=int(ask_price))
 
         logging.info("Ask trade {}".format(int(ask_price), amount))
 
