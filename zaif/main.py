@@ -23,6 +23,14 @@ def round_down4(value):
     return float(value)
 
 
+@app.route('/cleanup')
+def cleanup():
+    today = datetime.today()
+    a_day_ago = today - timedelta(days=1)
+    Price.cleanup(a_day_ago)
+
+    return jsonify({'cleanup': Price.cleanup(a_day_ago)})
+
 @app.route('/save_btc')
 def save_btc():
     zaif = ZaifPublicApi()

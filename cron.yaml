@@ -2,6 +2,12 @@ cron:
 - description: save BTC/JPY
   url: /save_btc
   schedule: every 1 mins
-- description: bid or ask BTC
-  url: /trade_btc
-  schedule: every 5 mins
+- description: bid BTC
+  url: /bid_btc
+  schedule: every 10 mins
+- description: ask BTC
+  url: /ask_btc
+  schedule: every 15 mins
+- description: cleanup
+  url: /cleanup
+  schedule: every 2 hours

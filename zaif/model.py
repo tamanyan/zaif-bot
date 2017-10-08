@@ -23,6 +23,20 @@ class Price(ndb.Model):
         else:
             return None
 
+    @classmethod
+    def cleanup(cls, more_than_before):
+        q = Price.query(
+            Price.datetime <= more_than_before)
+        results = q.fetch()
+
+        if len(results) > 0:
+            for i in results:
+                i.key.delete()
+            return True
+        else:
+            return False
+
+
 
 class BTCBidOrder(ndb.Model):
     """Models an BTC/JPY bid order."""
