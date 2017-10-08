@@ -43,7 +43,7 @@ def save_btc():
 
 @app.route('/ask_btc')
 def ask_btc():
-    ASK_PRICE_RATIO = 1.005 # 0.5%
+    ASK_PRICE_RATIO = 1.005 # 0.5% up
 
     zaif = ZaifPublicApi()
     last_price = zaif.last_price('btc_jpy')
@@ -96,7 +96,7 @@ def ask_btc():
 @app.route('/bid_btc')
 def bid_btc():
     MINITES_BEFORE = 30
-    PERCENTAGE_THRESHOLD = 0.2
+    PERCENTAGE_THRESHOLD = 0.8 # 0.8% down
 
     today = datetime.today()
     half_hour_ago = today - timedelta(minutes=MINITES_BEFORE)
