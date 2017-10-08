@@ -19,7 +19,7 @@ pip install -t lib -r requirements.txt
 cp zaif/settings.py.example zaif/settings.py
 ```
 
-You need to edit settings.py and set your KEY and SECRET which are provided from zaif.
+You need to edit settings.py and set your KEY and SECRET which are provided from Zaif.
 
 
 ```python
@@ -31,7 +31,7 @@ SECRET='your secret'
 ## How to start develop server
 
 ```
-dev_appserver.py . app.yaml worker.yaml
+dev_appserver.py app.yaml worker.yaml
 ```
 
 ## How to deploy
