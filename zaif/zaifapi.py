@@ -13,6 +13,9 @@ from future.moves.urllib.parse import urlencode
 from google.appengine.api import urlfetch
 
 
+urlfetch.set_default_fetch_deadline(120)
+
+
 SCHEMA = {
     'from_num': {
         'type': 'integer'
@@ -119,7 +122,7 @@ class ZaifPublicApi(AbsZaifApi):
 
     def __execute_api(self, func_name, currency_pair):
         self.__params_pre_processing(currency_pair)
-        response = urlfetch.fetch(self.__API_URL.format(func_name, currency_pair))
+        response = urlfetch.fetch(self.__API_URL.format(func_name, currency_pair), deadline=60)
         if response.status_code != 200:
             raise Exception('return status code is {}'.format(response.status_code))
         res = json.loads(response.content)
@@ -163,7 +166,7 @@ class ZaifPrivateApi(AbsZaifApi):
         params = self.params_pre_processing(schema_keys, params)
         params = self.__get_parameter(func_name, params)
         header = self.__get_header(params)
-        response = urlfetch.fetch(url=self.__API_URL, method=urlfetch.POST, payload=params, headers=header)
+        response = urlfetch.fetch(url=self.__API_URL, method=urlfetch.POST, payload=params, headers=header, deadline=60)
         if response.status_code != 200:
             raise Exception('return status code is {}'.format(response.status_code))
         res = json.loads(response.content)
@@ -204,3 +207,4 @@ class ZaifPrivateApi(AbsZaifApi):
 
     def trade(self, **kwargs):
         schema_keys = ['currency_pair', 'action', 'price', 'amount', 'limit']
+        return self.__execute_api(inspect.currentframe().f_code.co_name, schema_keys, kwargs)
