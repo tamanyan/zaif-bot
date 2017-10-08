@@ -122,7 +122,7 @@ class ZaifPublicApi(AbsZaifApi):
 
     def __execute_api(self, func_name, currency_pair):
         self.__params_pre_processing(currency_pair)
-        response = urlfetch.fetch(self.__API_URL.format(func_name, currency_pair), deadline=60)
+        response = urlfetch.fetch(self.__API_URL.format(func_name, currency_pair), deadline=120)
         if response.status_code != 200:
             raise Exception('return status code is {}'.format(response.status_code))
         res = json.loads(response.content)

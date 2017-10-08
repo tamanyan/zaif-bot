@@ -7,9 +7,16 @@ class Price(ndb.Model):
     price = ndb.IntegerProperty()
     datetime = ndb.DateTimeProperty(auto_now_add=True)
 
-    # @classmethod
-    # def query_book(cls, ancestor_key):
-    #     return cls.query(ancestor=ancestor_key).order(-cls.date)
+    @classmethod
+    def get_max_price(cls):
+        q = Price.query()
+        q = q.order(-Price.price)
+        results = q.fetch(1)
+
+        if len(results) > 0:
+            return results[0]
+        else:
+            return None
 
     @classmethod
     def get_price_before(cls, more_than_before):
