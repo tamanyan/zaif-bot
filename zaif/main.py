@@ -87,7 +87,7 @@ def ask_btc():
 
 @app.route('/bid_btc')
 def bid_btc():
-    MINITES_BEFORE = 5
+    MINITES_BEFORE = 30
     PERCENTAGE_THRESHOLD = 0.2
 
     today = datetime.today()
