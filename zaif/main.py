@@ -21,10 +21,10 @@ app = Flask(__name__)
 def cleanup():
     # delete prices of 2 days ago
     today = datetime.today()
-    two_day_ago = today - timedelta(days=2)
-    Price.cleanup(two_day_ago)
+    five_day_ago = today - timedelta(days=5)
+    Price.cleanup(five_day_ago)
 
-    return jsonify({'cleanup': Price.cleanup(two_day_ago)})
+    return jsonify({'cleanup': Price.cleanup(five_day_ago)})
 
 
 @app.route('/save_btc')
