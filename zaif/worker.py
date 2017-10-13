@@ -5,14 +5,14 @@ import webapp2
 
 class BidBTCHandler(webapp2.RequestHandler):
     def post(self):
-        PERCENTAGE_THRESHOLD = 0.8 # 0.8% down
+        PERCENTAGE_THRESHOLD = 1.0 # 1% down
 
-        half_hour_ago_price = get_minutes_ago_price(30)
+        half_hour_ago_price = get_minutes_ago_price(60)
         max_price = get_max_price()
         now_price = get_btc_last_price()
 
         if max_price is not None:
-            if float(now_price) / float(max_price) > 0.97:
+            if float(now_price) / float(max_price) > 0.98:
                 logging.info("The price is too high to trade")
                 logging.info("now {}".format(now_price))
                 logging.info("max {}".format(max_price))
@@ -71,7 +71,7 @@ class AskBTCHandler(webapp2.RequestHandler):
             return
 
         now_price = int(get_btc_last_price())
-        ask_price = int(latest_price * ASK_PRICE_RATIO)
+        ask_price = (int(latest_price * ASK_PRICE_RATIO) / 5) * 5
         if now_price > ask_price:
             ask_price = now_price
 

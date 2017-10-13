@@ -4,18 +4,18 @@ cron:
   schedule: every 5 mins
 - description: bid BTC
   url: /bid_btc
-  schedule: every 15 mins
+  schedule: every 45 mins
   retry_parameters:
     job_retry_limit: 2
     min_backoff_seconds: 10
     max_doublings: 5
 - description: ask BTC
   url: /ask_btc
-  schedule: every 20 mins
+  schedule: every 40 mins
   retry_parameters:
     job_retry_limit: 2
     min_backoff_seconds: 10
     max_doublings: 5
 - description: cleanup
   url: /cleanup
-  schedule: every 4 hours
+  schedule: every 12 hours

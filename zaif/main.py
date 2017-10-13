@@ -29,8 +29,11 @@ def cleanup():
 
 @app.route('/save_btc')
 def save_btc():
-    price = Price(price=int(get_btc_last_price()))
+    last_price = int(get_btc_last_price())
+    price = Price(price=last_price)
     price.put()
+
+    logging.info("The last price is {}".format(last_price))
 
     return jsonify({'BTC/JPY': price.price})
 
